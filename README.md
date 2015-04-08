@@ -8,6 +8,8 @@ https://learn.sparkfun.com/tutorials/programming-the-intel-edison-beyond-the-ard
 
 Here is the guy's code I used:
 https://github.com/jku/LSM9DS0
+
+NOTE: After you build the project in eclipse, and run it using the remote C/C++ Application run configuration, I was able to get it to run through the terminal on the Edison. Running the chmod 755 ./FILENAME and then ./FILENAME in the Edison terminal made it work.
 ----------------------------------------------------------
 
 Download Intel's Eclipse C/C++ development environment for Edison at:

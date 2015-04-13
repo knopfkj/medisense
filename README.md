@@ -1,6 +1,12 @@
 # medisense
 MediSense Code Repository
 
+If you can't find a library when building in eclipse: "To fix it I went to Project -> Properties -> C/C++ Build -> Settings, then under "Cross G++ Compiler" I clicked on "Includes" and manually add all the directories."
+
+
+
+
+-------------------------------------------------------
 9DOF Sensor Work
 
 Followed this guide, except used a sample C project instead of C++

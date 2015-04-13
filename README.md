@@ -3,7 +3,8 @@ MediSense Code Repository
 
 If you can't find a library when building in eclipse: "To fix it I went to Project -> Properties -> C/C++ Build -> Settings, then under "Cross G++ Compiler" I clicked on "Includes" and manually add all the directories."
 
-
+Working on getting this to work on the edison:
+http://www.thingworx.com/wp-content/uploads/2014/12/2.-How-to-read-Temperature-and-Humidity-from-HTU21D-sensor-using-Thingworx-C-SKD-for-I.pdf
 
 
 -------------------------------------------------------

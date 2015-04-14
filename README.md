@@ -6,7 +6,7 @@ Adventures in making the Intel Edison play with ThingWorxs
 Use this tutorial as a basis:
 http://www.thingworx.com/academic_content/galileo-weather-app/
 
-The code required is in the "IntelGalileoWeatherProject" folder.
+The code from this tutorial is in the "IntelGalileoWeatherProject" folder.
 IntelGalileoWeatherProject/TWX2/twLibrary contains all the necessary code that works the magic so the edison speaks to Thingworx.
 
 IntelGalileoWeatherProject/TemperatureAndHumidityThingworxWifi contains the .ino Arduino file I used as a basis for the final code.

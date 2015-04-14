@@ -1,11 +1,17 @@
 # medisense
 MediSense Code Repository
+------------------------------------------------------
+Adventures in making the Intel Edison play with ThingWorxs
 
-If you can't find a library when building in eclipse: "To fix it I went to Project -> Properties -> C/C++ Build -> Settings, then under "Cross G++ Compiler" I clicked on "Includes" and manually add all the directories."
+Use this tutorial as a basis:
+http://www.thingworx.com/academic_content/galileo-weather-app/
 
-Working on getting this to work on the edison:
-http://www.thingworx.com/wp-content/uploads/2014/12/2.-How-to-read-Temperature-and-Humidity-from-HTU21D-sensor-using-Thingworx-C-SKD-for-I.pdf
+The code required is in the "IntelGalileoWeatherProject" folder.
+IntelGalileoWeatherProject/TWX2/twLibrary contains all the necessary code that works the magic so the edison speaks to Thingworx.
 
+IntelGalileoWeatherProject/TemperatureAndHumidityThingworxWifi contains the .ino Arduino file I used as a basis for the final code.
+
+See /DOFinal for the completed code and configuration changes needed for eclipse.
 
 -------------------------------------------------------
 9DOF Sensor Work

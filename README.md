@@ -33,6 +33,9 @@ https://learn.sparkfun.com/tutorials/sparkfun-blocks-for-intel-edison---gpio-blo
 ----------------------------------------------------------
 Heart Rate
 
+This is looking promising:
+http://iotdk.intel.com/docs/master/mraa/
+
 ----------------------------------------------------------
 
 Pulse Sensor Code

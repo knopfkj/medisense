@@ -33,6 +33,11 @@ https://learn.sparkfun.com/tutorials/sparkfun-blocks-for-intel-edison---gpio-blo
 ----------------------------------------------------------
 Heart Rate
 
+1) install https://github.com/intel-iot-devkit/mraa on edison board
+2) code must be compiled via terminal on edison to it can reference the mraa librar (dont' forget -lmraa)
+
+
+
 This is looking promising:
 http://iotdk.intel.com/docs/master/mraa/
 

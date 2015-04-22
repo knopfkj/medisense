@@ -81,9 +81,9 @@ int timeBetweenRefresh = 1000;
 
 /* Hold all the properties */
 struct  {
-  double pitch;
-  double roll;
-  double yaw;
+  double x_acc;
+  double y_acc;
+  double z_acc;
 }
 properties;
 
@@ -362,14 +362,14 @@ int read_bias_files (Triplet *a_bias, Triplet *g_bias, Triplet *m_bias, FTriplet
 
 void sendPropertyUpdate() {
   /* Create the property list */
- propertyList * proplist = twApi_CreatePropertyList("Pitch",twPrimitive_CreateFromNumber(properties.pitch), 0);
+ propertyList * proplist = twApi_CreatePropertyList("x_acc",twPrimitive_CreateFromNumber(properties.x_acc), 0);
 	if (!proplist) {
 		TW_LOG(TW_ERROR,"sendPropertyUpdate: Error allocating property list");
 		return;
 	}
 	//add other properties to TW list
-  twApi_AddPropertyToList(proplist,"Roll",twPrimitive_CreateFromNumber(properties.roll), 0);
-  twApi_AddPropertyToList(proplist,"Yaw",twPrimitive_CreateFromNumber(properties.yaw), 0);
+  twApi_AddPropertyToList(proplist,"y_acc",twPrimitive_CreateFromNumber(properties.y_acc), 0);
+  twApi_AddPropertyToList(proplist,"z_acc",twPrimitive_CreateFromNumber(properties.z_acc), 0);
   twApi_PushProperties(TW_THING, thingName, proplist, -1, FALSE);
   twApi_DeletePropertyList(proplist);
 }
@@ -404,9 +404,9 @@ enum msgCodeEnum propertyHandler(const char * entityName, const char * propertyN
   if (value) {
 
       /* Property Reads */
-      if (strcmp(propertyName, "Pitch") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.pitch);
-      else if (strcmp(propertyName, "Roll") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.roll);
-      else if (strcmp(propertyName, "Yaw") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.yaw);
+      if (strcmp(propertyName, "x_acc") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.x_acc);
+      else if (strcmp(propertyName, "y_acc") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.y_acc);
+      else if (strcmp(propertyName, "z_acc") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.z_acc);
       else return TWX_NOT_FOUND;
     return TWX_SUCCESS;
   }
@@ -439,9 +439,9 @@ int main(int argc, char **argv) {
 	  twApi_SetSelfSignedOk();
 
 	  /* Regsiter our properties */
-	   twApi_RegisterProperty(TW_THING, thingName, "Pitch", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
-	   twApi_RegisterProperty(TW_THING, thingName, "Roll", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
-	   twApi_RegisterProperty(TW_THING, thingName, "Yaw", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
+	   twApi_RegisterProperty(TW_THING, thingName, "x_acc", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
+	   twApi_RegisterProperty(TW_THING, thingName, "y_acc", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
+	   twApi_RegisterProperty(TW_THING, thingName, "z_acc", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
 
 	  /* Bind our thing */
 	  twApi_BindThing(thingName);
@@ -461,7 +461,7 @@ int main(int argc, char **argv) {
 	    Triplet a_bias = {0}, g_bias = {0}, m_bias = {0};
 	    FTriplet m_scale;
 	    int opt, option_index, help = 0, option_dump = 0;
-	    OptionMode option_mode = OPTION_MODE_ANGLES;
+	    OptionMode option_mode = OPTION_MODE_SENSOR; //OPTION_MODE_ANGLES
 	    float declination = 0.0;
 
 	    while ((opt = getopt_long(argc, argv, "d:hm:u",
@@ -533,15 +533,16 @@ int main(int argc, char **argv) {
 	        printf ("gyro: %4.0f %4.0f %4.0f | ", gyro.x, gyro.y, gyro.z);
 	        printf ("mag: %4.0f %4.0f %4.0f | ", mag.x*1000, mag.y*1000, mag.z*1000);
 	        printf ("acc: %4.0f %4.0f %5.0f\n", acc.x*1000, acc.y*1000, acc.z*1000);
+
+	        //update sensor data into properties struct to send to TW
+	        properties.x_acc = acc.x*1000;
+	        properties.y_acc = acc.y*1000;
+	        properties.z_acc = acc.z*1000;
+	        dataCollectionTask();
 	      } else {
 	        calculate_simple_angles (mag, acc, declination, &angles1);
 	        printf ("pitch: %4.0f, roll: %4.0f, yaw: %4.0f\n",
 	                angles1.x, angles1.y, angles1.z);
-	        //update sensor data into properties struct to send to TW
-	        properties.pitch = angles1.x;
-	        properties.roll = angles1.y;
-	        properties.yaw = angles1.z;
-	        dataCollectionTask();
 
 	      }
 	    }

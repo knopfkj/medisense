@@ -38,9 +38,11 @@
 								<option id="gnu.c.link.option.ldflags.1324815053" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="${LDFLAGS}" valueType="string"/>
 								<option id="gnu.c.link.option.paths.327051470" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;E:\Edison\IntelGalileoWeatherProject\TWX2&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:\Dropbox\WVU\Senior Design\github\medisense\pushbutton\mraa-master\mraa-master&quot;"/>
 								</option>
 								<option id="gnu.c.link.option.libs.1516944802" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="mraa"/>
 									<listOptionValue builtIn="false" value="ncurses"/>
 									<listOptionValue builtIn="false" value="m"/>
 								</option>

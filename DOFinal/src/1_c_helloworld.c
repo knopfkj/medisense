@@ -8,20 +8,19 @@
  ============================================================================
  */
 
+#include "mraa/gpio.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 //#include <Dhcp.h>
 //#include <Dns.h>#include <twApi.h>
-#include <twLogger.h>
-#include <twOSPort.h>
-#include <twApi.h>
-#include <getopt.h>
-#include <unistd.h>
-#include <math.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "twLogger.h"
+#include "twOSPort.h"
+#include "twApi.h"
+#include "getopt.h"
+#include "unistd.h"
 #include <inttypes.h>
 #include "edison-9dof-i2c.h"
 #define BYTE2BIN(byte) \
@@ -84,6 +83,7 @@ struct  {
   double x_acc;
   double y_acc;
   double z_acc;
+  double push_button;
 }
 properties;
 
@@ -370,6 +370,7 @@ void sendPropertyUpdate() {
 	//add other properties to TW list
   twApi_AddPropertyToList(proplist,"y_acc",twPrimitive_CreateFromNumber(properties.y_acc), 0);
   twApi_AddPropertyToList(proplist,"z_acc",twPrimitive_CreateFromNumber(properties.z_acc), 0);
+  twApi_AddPropertyToList(proplist,"button",twPrimitive_CreateFromNumber(properties.push_button), 0);
   twApi_PushProperties(TW_THING, thingName, proplist, -1, FALSE);
   twApi_DeletePropertyList(proplist);
 }
@@ -407,6 +408,7 @@ enum msgCodeEnum propertyHandler(const char * entityName, const char * propertyN
       if (strcmp(propertyName, "x_acc") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.x_acc);
       else if (strcmp(propertyName, "y_acc") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.y_acc);
       else if (strcmp(propertyName, "z_acc") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.z_acc);
+      else if (strcmp(propertyName, "push_button") == 0) *value = twInfoTable_CreateFromNumber(propertyName, properties.push_button);
       else return TWX_NOT_FOUND;
     return TWX_SUCCESS;
   }
@@ -418,6 +420,11 @@ enum msgCodeEnum propertyHandler(const char * entityName, const char * propertyN
 
 
 int main(int argc, char **argv) {
+
+	mraa_gpio_context gpio; //pushbutton gpio
+	gpio = mraa_gpio_init(36);
+	mraa_gpio_dir(gpio, MRAA_GPIO_IN); //sets pin GP14 as input
+
 	int err=0;
 	system("ifup wlan0");
 	  /* wait for it to start */
@@ -442,6 +449,7 @@ int main(int argc, char **argv) {
 	   twApi_RegisterProperty(TW_THING, thingName, "x_acc", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
 	   twApi_RegisterProperty(TW_THING, thingName, "y_acc", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
 	   twApi_RegisterProperty(TW_THING, thingName, "z_acc", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
+	   twApi_RegisterProperty(TW_THING, thingName, "button", TW_NUMBER, NULL, "ALWAYS", 0, propertyHandler,NULL);
 
 	  /* Bind our thing */
 	  twApi_BindThing(thingName);
@@ -534,10 +542,14 @@ int main(int argc, char **argv) {
 	        printf ("mag: %4.0f %4.0f %4.0f | ", mag.x*1000, mag.y*1000, mag.z*1000);
 	        printf ("acc: %4.0f %4.0f %5.0f\n", acc.x*1000, acc.y*1000, acc.z*1000);
 
+	        //fprintf(stdout, "Gpio is %d\n", mraa_gpio_read(gpio));
+
 	        //update sensor data into properties struct to send to TW
 	        properties.x_acc = acc.x*1000;
 	        properties.y_acc = acc.y*1000;
 	        properties.z_acc = acc.z*1000;
+	        properties.push_button = mraa_gpio_read(gpio);
+	        printf("GPIO: %f\n", properties.push_button);
 	        dataCollectionTask();
 	      } else {
 	        calculate_simple_angles (mag, acc, declination, &angles1);
@@ -549,4 +561,5 @@ int main(int argc, char **argv) {
 
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
 	return 0;
+	mraa_gpio_close(gpio);
 }

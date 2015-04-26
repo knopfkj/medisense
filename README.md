@@ -54,3 +54,15 @@ http://pulsesensor.com/pages/pulse-sensor-amped-arduino-v1dot1
 (I used the download from the sparkfun guide at the top)
 Download Intel's Eclipse C/C++ development environment for Edison at:
 https://software.intel.com/sites/landingpage/iotdk/windows-development-kit.html
+
+----------------------------------------------------------
+Tricks / Good to know:
+
+configure_edison –setup (/etc/hostapd/hostapd.conf takes the root pw)
+
+rfkill unblock wifi
+rfkill unblock bluetooth
+
+opkg list – list available package to be installed
+opkg update
+opkg upgrad

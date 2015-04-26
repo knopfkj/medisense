@@ -57,7 +57,7 @@ https://software.intel.com/sites/landingpage/iotdk/windows-development-kit.html
 
 ----------------------------------------------------------
 Tricks / Good to know:
-
+----------------------------------------------------------
 configure_edison –setup (/etc/hostapd/hostapd.conf takes the root pw)
 
 rfkill unblock wifi

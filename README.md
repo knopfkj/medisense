@@ -60,7 +60,8 @@ Tricks / Good to know:
 ----------------------------------------------------------
 configure_edison –setup (/etc/hostapd/hostapd.conf takes the root pw)
 
-rfkill unblock wifi
+rfkill unblock wifi 
+
 rfkill unblock bluetooth
 
 opkg list – list available package to be installed

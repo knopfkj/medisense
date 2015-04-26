@@ -1,0 +1,14 @@
+#place this file at /lib/systemd/system/btup.service
+
+ [Unit]
+ Description=BTUP
+ After=bluetooth.target
+ Before=systemd-user-sessions.service
+ [Service]
+ Type=simple
+ RemainAfterExit=true
+ ExecStart=/home/root/btup.sh
+ Environment="HOME=/home/root"
+ WorkingDirectory=/home/root/
+ [Install]
+ WantedBy=multi-user.target

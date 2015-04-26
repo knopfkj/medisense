@@ -64,5 +64,6 @@ rfkill unblock wifi
 rfkill unblock bluetooth
 
 opkg list – list available package to be installed
+
 opkg update
 opkg upgrade

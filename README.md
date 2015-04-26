@@ -16,6 +16,8 @@ See /DOFinal for the completed code and configuration changes needed for eclipse
 -------------------------------------------------------
 9DOF Sensor Work
 
+DOF acceleration values are in mG.
+
 Followed this guide, except used a sample C project instead of C++
 https://learn.sparkfun.com/tutorials/programming-the-intel-edison-beyond-the-arduino-ide?_ga=1.211029523.740336311.1428326006
 

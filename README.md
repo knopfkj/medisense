@@ -55,6 +55,11 @@ http://pulsesensor.com/pages/pulse-sensor-amped-arduino-v1dot1
 Download Intel's Eclipse C/C++ development environment for Edison at:
 https://software.intel.com/sites/landingpage/iotdk/windows-development-kit.html
 
+
+How to automattiacl execute commands at start up
+
+root@edison:/etc/init.d# update-rc.d rc.sh defaults
+
 ----------------------------------------------------------
 Tricks / Good to know:
 ----------------------------------------------------------

@@ -58,6 +58,9 @@ https://software.intel.com/sites/landingpage/iotdk/windows-development-kit.html
 ----------------------------------------------------------
 Automatic Scripting at Boot-Up
 ----------------------------------------------------------
+there are a few different ways to do this, but on Edison I found that the easiest way is using the /etc/init.d directory. There are many references out there for why and how this works, a good one can be found here. If this is your first time using init.d for start-up scripts, you’re going go to the directory /etc/init.d:
+
+
 root@edison:/etc/init.d# update-rc.d rc.sh defaults
 
 ----------------------------------------------------------

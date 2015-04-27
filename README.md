@@ -63,6 +63,28 @@ there are a few different ways to do this, but on Edison I found that the easies
 
 root@edison:/etc/init.d# update-rc.d rc.sh defaults
 
+
+ 
+Edison uses systemd for starting and stopping serviices, so you can have a script started using this method at boot.
+ 
+Add a new service script to /lib/systemd/system - have a look at the scripts alreadythere, a good example is the iotkit-agent.service script.
+So you then have yourscript.service file.
+To start, first refresh systemd, then try to start your new service
+   systemctl daemon-reload
+   systemcrl start yourscript.service
+ 
+You can then use 'systemctl status yourscript.service' to see if it's started and alive.
+ 
+If you want it to start at boot, you have to 'enable' it
+   systemcrl enable yourscript.service 
+which creates a softlink to your script from the relevant directory in /etc/systemd/system/...
+Now reboot and see if it comes up ok.
+ 
+If your script calls a binary that needs environment vars set up, be sure to include them in the script, LD_LIBRARY_PATH is a common var needed:
+LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+export LD_LIBRARY_PATH
+
+
 ----------------------------------------------------------
 Tricks / Good to know:
 ----------------------------------------------------------

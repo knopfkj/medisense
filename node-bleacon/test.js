@@ -1,8 +1,8 @@
 var Bleacon = require('./index'),
-    http = require('http')
-var array = [];
+    http = require('http');
+var sleep = require('sleep');
 
-Bleacon.startAdvertising('e2c56db5dffb48d2b060d0f5a71096e0', 0, 0, -59);
+//Bleacon.startAdvertising('e2c56db5dffb48d2b060d0f5a71096e0', 0, 0, -59);
 
 Bleacon.on('discover', function(bleacon) {
   console.log('bleacon found: ' + JSON.stringify(bleacon));
@@ -10,8 +10,8 @@ Bleacon.on('discover', function(bleacon) {
   var options = {
     host: 'thingworx-wvu.ptcmscloud.com',
     port: 80,
-    method: 'POST',
-    path: '/Thingworx/Things/medisenseBLEscan/Properties/BLEdata?Accept=application/json&method=post&x-thingworx-session=true&value={"dataShape":{"fieldDefinitions":{"uuid":{"baseType":"STRING","description":"uuid","name":"uuid","aspects":{},"ordinal":0},"major":{"baseType":"NUMBER","description":"major","name":"major","aspects":{},"ordinal":0},"minor":{"baseType":"NUMBER","description":"minor","name":"minor","aspects":{},"ordinal":0},"measuredPower":{"baseType":"NUMBER","description":"measuredPower","name":"measuredPower","aspects":{},"ordinal":0},"rssi":{"baseType":"NUMBER","description":"rssi","name":"rssi","aspects":{},"ordinal":0},"accuracy":{"baseType":"NUMBER","description":"accuracy","name":"accuracy","aspects":{},"ordinal":0},"proximity":{"baseType":"STRING","description":"uuid","name":"uuid","aspects":{},"ordinal":0}}},"rows":[' + JSON.stringify(bleacon) + ']}&appKey=314c5fc5-a06b-4fbb-b40a-4d87e24e9bff'
+    method: 'PUT',
+    path: '/Thingworx/Things/medisenseBLEscan02/Properties/BLEdata?Accept=application/json&method=put&x-thingworx-session=true&value={"dataShape":{"fieldDefinitions":{"uuid":{"baseType":"STRING","description":"uuid","name":"uuid","aspects":{},"ordinal":0},"major":{"baseType":"NUMBER","description":"major","name":"major","aspects":{},"ordinal":0},"minor":{"baseType":"NUMBER","description":"minor","name":"minor","aspects":{},"ordinal":0},"measuredPower":{"baseType":"NUMBER","description":"measuredPower","name":"measuredPower","aspects":{},"ordinal":0},"rssi":{"baseType":"NUMBER","description":"rssi","name":"rssi","aspects":{},"ordinal":0},"accuracy":{"baseType":"NUMBER","description":"accuracy","name":"accuracy","aspects":{},"ordinal":0},"proximity":{"baseType":"STRING","description":"uuid","name":"uuid","aspects":{},"ordinal":0}}},"rows":[' + JSON.stringify(bleacon) + ']}&appKey=314c5fc5-a06b-4fbb-b40a-4d87e24e9bff'
 };
 
   var req = http.request(options, function(resp){
